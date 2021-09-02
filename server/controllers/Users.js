@@ -4,9 +4,9 @@ module.exports = {
   login: (request, response) => {
     loginModel(request.body, (err, result) => {
       if (err) {
-        res.status(403).send();
+        response.status(403).send();
       } else {
-        res.send(result);
+        response.send(result);
       }
     });
   },
