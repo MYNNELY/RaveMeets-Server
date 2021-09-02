@@ -1,23 +1,31 @@
 const { Users } = require('../../database/mongoose.js')
+const bcrypt = require('bcryptjs');
 
 module.exports = {
   getUserModel: ({ username }, callback) => {
-    Users.find({ username }, (err, doc) => {
-      if (err) {
+    Users.find({ username })
+      .select('-password')
+      .then((result) => {
+        callback(null, result)
+      })
+      .catch((err) => {
         callback(err, null)
-      } else {
-        callback(null, doc)
-      }
-    });
+      })
   },
   createUserModel: ({ username, name, email, password }, callback) => {
-    Users.create({ username, name, email, password }, (err, res) => {
-      if (err) {
+    bcrypt.hash(password, 10)
+      .then((hashedPassword) => {
+        Users.create({ username, name, email, password: hashedPassword }, (err, res) => {
+          if (err) {
+            callback(err, null)
+          } else {
+            callback(null, res)
+          }
+        });
+      })
+      .catch((err) => {
         callback(err, null)
-      } else {
-        callback(null, res)
-      }
-    });
+      });
   },
   updateUserModel: (
     {
