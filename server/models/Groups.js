@@ -60,31 +60,31 @@ module.exports = {
       }
     })
   },
-  addGroupMembersModel: ({ group_id },{ username, role }, callback) => {
-    Users.findOne({ username }, (err, usersResult) => {
-      if (err) {
-        callback(err, null)
-      } else {
-        Groups.updateOne({
-          _id: group_id
-        }, {
-          $push: {
-            members: {
-              username: username,
-              name: usersResult.name,
-              role: role
-            }
-          }
-        }, (err, result) => {
-          if (err) {
-            callback(err, null)
-          } else {
-            callback(null, result)
-          }
-        })
-      }
-    })
-  },
+  // addGroupMembersModel: ({ group_id },{ username, role }, callback) => {
+  //   Users.findOne({ username }, (err, usersResult) => {
+  //     if (err) {
+  //       callback(err, null)
+  //     } else {
+  //       Groups.updateOne({
+  //         _id: group_id
+  //       }, {
+  //         $push: {
+  //           members: {
+  //             username: username,
+  //             name: usersResult.name,
+  //             role: role
+  //           }
+  //         }
+  //       }, (err, result) => {
+  //         if (err) {
+  //           callback(err, null)
+  //         } else {
+  //           callback(null, result)
+  //         }
+  //       })
+  //     }
+  //   })
+  // },
   AddGroupPhotosModel: ({ group_id }, { photos }, callback) => {
     Groups.updateOne({
       _id: group_id
@@ -109,4 +109,55 @@ module.exports = {
       }
     })
   },
+  addGroupMembersModel: ({ group_id },{ username, role }, callback) => {
+    let userData;
+    let groupData;
+    Users.findOne({ username })
+      .then((user) => {
+        userData = user
+        Groups.findById(group_id)
+          .then((group) => {
+            groupData = group
+            Groups.updateOne({
+              _id: group_id
+            }, {
+              $push: {
+                members: {
+                  username: username,
+                  name: userData.name,
+                  role: role
+                }
+              }
+            })
+            .then(() => {
+              Users.updateOne({
+                username
+              },{
+                $push: {
+                  groups: {
+                    group_name: groupData.name,
+                    group_id: groupData._id
+                  }
+                }
+              })
+              .then((result) => {
+                callback(null, result)
+              })
+              .catch((err) => {
+                callback(err, null)
+              })
+            })
+            .catch((err) => {
+              callback(err, null)
+            })
+          })
+          .catch((err) => {
+            callback(err, null)
+          })
+      })
+      .catch((err) => {
+        callback(err, null)
+      })
+  },
+
 }
