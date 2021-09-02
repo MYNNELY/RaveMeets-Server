@@ -1,4 +1,4 @@
-const { getEventModels, getAllEventsModel, createEventModel } = require('../models/Events.js');
+const { getEventModels, getAllEventsModel, createEventModel, deleteEventModel } = require('../models/Events.js');
 
 module.exports = {
   getEvent: (request, response) => {
@@ -25,6 +25,15 @@ module.exports = {
         response.status(500).send();
       } else {
         response.send(result);
+      }
+    });
+  },
+  deleteEvent: (request, response) => {
+    deleteEventModel(request.params, (err, result) => {
+      if (err) {
+        response.status(500).send();
+      } else {
+        response.send();
       }
     });
   }

@@ -1,6 +1,15 @@
-const { getUserModel, createUserModel, updateUserModel, createEventMemoriesModel } = require('../models/Users.js');
+const { loginModel, getUserModel, createUserModel, updateUserModel, createEventMemoriesModel } = require('../models/Users.js');
 
 module.exports = {
+  login: (request, response) => {
+    loginModel(request.body, (err, result) => {
+      if (err) {
+        res.status(403).send();
+      } else {
+        res.send(result);
+      }
+    });
+  },
   getUser: (request, response) => {
     getUserModel(request.params, (err, result) => {
       if (err) {

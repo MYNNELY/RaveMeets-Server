@@ -98,6 +98,14 @@ module.exports = {
         callback(null, result)
       }
     });
-  }
-
+  },
+  deleteGroupModel: ({ group_id }, callback) => {
+    Groups.findByIdAndDelete(group_id, (err, result) => {
+      if (err) {
+        callback(err, null)
+      } else {
+        callback(null, result)
+      }
+    })
+  },
 }

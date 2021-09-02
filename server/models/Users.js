@@ -1,7 +1,26 @@
 const { Users } = require('../../database/mongoose.js')
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken')
 
 module.exports = {
+  loginModel: ({ username, password }, callback) => {
+    User.findOne({ username })
+      .then((user) => {
+        if (bcrypt.compare(password, user.password)) {
+          jwt.sign({
+            id: user._id,
+            username: user.username
+          }, process.env.JWT_SECRET, (err, token) => {
+            callback(null, token)
+          });
+        } else {
+          callback(true, null)
+        }
+      })
+      .catch((err) => {
+        callback(err, null)
+      })
+  },
   getUserModel: ({ username }, callback) => {
     Users.find({ username })
       .select('-password')

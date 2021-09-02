@@ -50,4 +50,13 @@ module.exports = {
       }
     });
   },
+  deleteEventModel: ({ event_id }, callback) => {
+    Events.findByIdAndDelete(event_id, (err, result) => {
+      if (err) {
+        callback(err, null)
+      } else {
+        callback(null, result)
+      }
+    });
+  }
 }

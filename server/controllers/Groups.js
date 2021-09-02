@@ -1,4 +1,4 @@
-const { getAllGroupsModel, getGroupModel, createGroupModel, addGroupMembersModel, AddGroupPhotosModel } = require('../models/Groups.js');
+const { deleteGroupModel, getAllGroupsModel, getGroupModel, createGroupModel, addGroupMembersModel, AddGroupPhotosModel } = require('../models/Groups.js');
 
 module.exports = {
   getAllGroups: (request, response) => {
@@ -43,6 +43,15 @@ module.exports = {
         response.status(500).send();
       } else {
         response.status(201).send();
+      }
+    })
+  },
+  deleteGroup: (request, response) => {
+    deleteGroupModel(request.params, (err, result) => {
+      if (err) {
+        response.status(500).send();
+      } else {
+        response.send();
       }
     })
   }

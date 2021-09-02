@@ -1,11 +1,12 @@
 const router = require('express').Router();
 const { getUser, createUser, updateUser, createEventMemories } = require('./controllers/Users.js');
-const { getEvent, getAllEvents, createEvent } = require('./controllers/Events.js');
-const { getAllGroups, getGroup, createGroup, addGroupMembers, AddGroupPhotos } = require('./controllers/Groups.js')
+const { deleteEvent, getEvent, getAllEvents, createEvent } = require('./controllers/Events.js');
+const { deleteGroup, getAllGroups, getGroup, createGroup, addGroupMembers, AddGroupPhotos } = require('./controllers/Groups.js')
 
 
 
 //Users
+router.get('/login')
 
 router.get('/u/:username', getUser);
 
@@ -23,9 +24,13 @@ router.get('/events/:event_id', getEvent);
 
 router.post('/events', createEvent);
 
+router.delete('/events/:event_id', deleteEvent)
+
 //Groups
 
 // router.get('/groups', getAllGroups);
+
+router.delete('/groups/:group_id', deleteGroup);
 
 router.get('/groups/:group_id', getGroup);
 
