@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 
 module.exports = {
   loginModel: ({ username, password }, callback) => {
-    User.findOne({ username })
+    Users.findOne({ username })
       .then((user) => {
         if (bcrypt.compare(password, user.password)) {
           jwt.sign({
