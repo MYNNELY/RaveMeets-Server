@@ -10,7 +10,7 @@ module.exports = {
       }
     })
   },
-  getGroupModel: ({group_id}, callback) => {
+  getGroupModel: ({ group_id }, callback) => {
     Groups.find({ _id: group_id}, (err, result) => {
       if (err) {
         callback(err, null)
@@ -43,7 +43,8 @@ module.exports = {
               } else {
                 Users.updateOne({ username }, {
                   $push: {groups: {
-                    group_name: groupsResult.name
+                    group_name: groupsResult.name,
+                    group_id: groupsResult._id
                   }}
                 }, (err, result) => {
                   if (err) {

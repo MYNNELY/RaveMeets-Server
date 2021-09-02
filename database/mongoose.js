@@ -32,7 +32,8 @@ const eventsMemoriesSchema = new mongoose.Schema({
 });
 
 const usersGroupsSchema = new mongoose.Schema({
-  group_name: String
+  group_name: String,
+  group_id: String
 });
 
 const venuesSchema = new mongoose.Schema({
