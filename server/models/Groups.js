@@ -1,6 +1,24 @@
 const { Groups, Users, Events } = require('../../database/mongoose.js')
 
 module.exports = {
+  getAllGroupsModel: (callback) => {
+    Groups.find({}, (err, result) => {
+      if (err) {
+        callback(err, null)
+      } else {
+        callback(null, result)
+      }
+    })
+  },
+  getGroupModel: ({group_id}, callback) => {
+    Groups.find({ _id: group_id}, (err, result) => {
+      if (err) {
+        callback(err, null)
+      } else {
+        callback(null, result)
+      }
+    })
+  },
   createGroupModel: ({ name, banner_url, event_id, username }, callback) => {
     Users.findOne({ username }, (err, usersResult) => {
       if (err) {

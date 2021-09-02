@@ -1,6 +1,15 @@
 const { Events } = require('../../database/mongoose.js')
 
 module.exports = {
+  getEventModels: ({ event_id }, callback) => {
+    Events.find({_id: event_id}, (err, result) => {
+      if (err) {
+        callback(err, null)
+      } else {
+        callback(null, result)
+      }
+    });
+  },
   getAllEventsModel: (callback) => {
     Events.find({}, (err, docs) => {
       if (err) {

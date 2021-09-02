@@ -1,6 +1,24 @@
-const { createGroupModel, addGroupMembersModel, AddGroupPhotosModel } = require('../models/Groups.js');
+const { getAllGroupsModel, getGroupModel, createGroupModel, addGroupMembersModel, AddGroupPhotosModel } = require('../models/Groups.js');
 
 module.exports = {
+  getAllGroups: (request, response) => {
+    getAllGroupsModel((err, result) => {
+      if (err) {
+        response.status(500).send();
+      } else {
+        response.send(result);
+      }
+    });
+  },
+  getGroup: (request, response) => {
+    getGroupModel(request.params, (err, result) => {
+      if (err) {
+        response.status(500).send();
+      } else {
+        response.send(result);
+      }
+    });
+  },
   createGroup: (request, response) => {
     createGroupModel(request.body, (err, result) => {
       if (err) {
