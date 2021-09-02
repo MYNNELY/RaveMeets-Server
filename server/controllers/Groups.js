@@ -31,7 +31,6 @@ module.exports = {
   addGroupMembers: (request, response) => {
     addGroupMembersModel(request.params, request.body, (err, result) => {
       if (err) {
-        console.log(err);
         response.status(500).send();
       } else {
         response.status(201).send();
