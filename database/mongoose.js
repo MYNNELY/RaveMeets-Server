@@ -38,7 +38,7 @@ const usersGroupsSchema = new mongoose.Schema({
 
 const venuesSchema = new mongoose.Schema({
   name: String,
-  Address: String
+  address: String
 });
 
 const groupMemberShema = new mongoose.Schema({
