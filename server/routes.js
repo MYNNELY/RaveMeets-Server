@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { login, getUser, createUser, updateUser, createEventMemories } = require('./controllers/Users.js');
+const { login, addFriend, eventAttended, eventAttending, getUser, createUser, updateUser, createEventMemories } = require('./controllers/Users.js');
 const { updateEvent, deleteEvent, getEvent, getAllEvents, createEvent } = require('./controllers/Events.js');
 const { deleteGroup, getAllGroups, getGroup, createGroup, addGroupMembers, AddGroupPhotos } = require('./controllers/Groups.js')
 
@@ -15,6 +15,12 @@ router.post('/u', createUser);
 router.put('/u/:username', updateUser);
 
 router.post('/u/:username/memories', createEventMemories);
+
+router.post('/u/:username/friends', addFriend);
+
+router.post('/u/:username/events/attending', eventAttending);
+
+router.post('/u/:username/events/attended', eventAttended);
 
 //Events
 

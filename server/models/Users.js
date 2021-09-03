@@ -1,4 +1,4 @@
-const { Users } = require('../../database/mongoose.js')
+const { Users, Events } = require('../../database/mongoose.js')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 
@@ -100,5 +100,96 @@ module.exports = {
         callback(null, res)
       }
     });
+  },
+  addFriendModel: ({ username }, { friend_username }, callback) => {
+    let friendData;
+    let userData;
+
+    Users.findOne({ username })
+      .then((User) => {
+        userData = User;
+        Users.findOne({ username: friend_username })
+          .then((Friend) => {
+            friendData = Friend;
+            Users.updateOne({ username }, {
+              $push: {
+                friends: {
+                  friend_name: friendData.name,
+                  friend_username: friendData.username
+                }
+              }
+            })
+            .then(() => {
+              Users.updateOne({ username: friend_username}, {
+                $push: {
+                  friends: {
+                    friend_name: userData.name,
+                    friend_username: userData.username
+                  }
+                }
+              })
+              .then((result) => {
+                callback(null, result)
+              })
+              .catch((err) => {
+                callback(err, null)
+              })
+            })
+          })
+          .catch((err) => {
+            callback(err, null)
+          })
+      })
+      .catch((err) => {
+        callback(err, null)
+      })
+  },
+  eventAttendingModel: ({ username }, { event_id }, callback) => {
+    Events.findById(event_id)
+      .then((event) => {
+        Users.updateOne({ username }, {
+          $push: {
+            events_upcoming: event
+          }
+        })
+        .then((result) => {
+          callback(null, result);
+        })
+        .catch((err) => {
+          callback(err, null)
+        })
+      })
+      .catch((err) => {
+        callback(err, null)
+      });
+  },
+  eventAttendedModel: ({ username }, { event_id }, callback) => {
+    Events.findById(event_id)
+      .then((event) => {
+        Users.updateOne({ username }, {
+          $push: {
+            events_attended: event
+          }
+        })
+        .then((result) => {
+          Users.findOne({ username })
+            .then((result) => {
+              result.events_upcoming.id(event_id).remove()
+              result.save()
+                .then((result) => {
+                  callback(null, result)
+                })
+                .catch((err) => {
+                  callback(err, null)
+                })
+            })
+        })
+        .catch((err) => {
+          callback(err, null)
+        })
+      })
+      .catch((err) => {
+        callback(err, null)
+      });
   },
 }

@@ -1,4 +1,4 @@
-const { loginModel, getUserModel, createUserModel, updateUserModel, createEventMemoriesModel } = require('../models/Users.js');
+const { loginModel, eventAttendingModel, eventAttendedModel, addFriendModel, getUserModel, createUserModel, updateUserModel, createEventMemoriesModel } = require('../models/Users.js');
 
 module.exports = {
   login: (request, response) => {
@@ -49,5 +49,33 @@ module.exports = {
         response.status(201).send();
       }
     });
+  },
+  addFriend: (request, response) => {
+    addFriendModel(request.params, request.body, (err, result) => {
+      if (err) {
+        response.status(500).send();
+      } else {
+        response.status(201).send();
+      }
+    })
+  },
+  eventAttending: (request, response) => {
+    eventAttendingModel(request.params, request.body, (err, result) => {
+      if (err) {
+        response.status(500).send();
+      } else {
+        response.status(201).send();
+      }
+    })
+  },
+  eventAttended: (request, response) => {
+    eventAttendedModel(request.params, request.body, (err, result) => {
+      if (err) {
+        console.log(err);
+        response.status(500).send();
+      } else {
+        response.status(201).send();
+      }
+    })
   }
 }
