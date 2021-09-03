@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { login, addFriend, eventAttended, eventAttending, getUser, createUser, updateUser, createEventMemories } = require('./controllers/Users.js');
 const { updateEvent, deleteEvent, getEvent, getAllEvents, createEvent } = require('./controllers/Events.js');
 const { deleteGroup, getAllGroups, getGroup, createGroup, addGroupMembers, AddGroupPhotos } = require('./controllers/Groups.js')
-
+const { searchGroupsAndEvents } = require('./controllers/Query.js')
 
 
 //Users
@@ -36,8 +36,6 @@ router.delete('/events/:event_id', deleteEvent);
 
 //Groups
 
-// router.get('/groups', getAllGroups);
-
 router.delete('/groups/:group_id', deleteGroup);
 
 router.get('/groups/:group_id', getGroup);
@@ -47,5 +45,9 @@ router.post('/groups', createGroup);
 router.post('/groups/:group_id/members', addGroupMembers);
 
 router.post('/groups/:group_id/photos', AddGroupPhotos);
+
+// Query
+
+router.get('/search', searchGroupsAndEvents);
 
 module.exports = router;
