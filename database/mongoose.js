@@ -67,6 +67,11 @@ const usersSchema = new mongoose.Schema({
     index: true,
     unique: true,
   },
+  oauth_id: {
+    type: String,
+    index: true,
+    unique: true,
+  },
   name: String,
   email: String,
   password: String,
