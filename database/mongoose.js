@@ -50,6 +50,7 @@ const groupMemberShema = new mongoose.Schema({
 const eventsSchema = new mongoose.Schema({
   name: String,
   link: String,
+  description: String,
   start_date: Date,
   end_date: Date,
   event_banner_url: String,

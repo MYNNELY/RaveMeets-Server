@@ -58,5 +58,35 @@ module.exports = {
         callback(null, result)
       }
     });
-  }
+  },
+  updateEventModel: ({ event_id },{
+    name,
+    link,
+    description,
+    start_date,
+    end_date,
+    event_banner_url,
+    price,
+    minimum_age,
+    genres,
+    artist_list,
+    venue
+  }, callback) => {
+    Events.updateOne({_id: event_id},{
+      name,
+      link,
+      description,
+      start_date,
+      end_date,
+      event_banner_url,
+      price,
+      minimum_age,
+      venue
+    }, (err, res) => {
+      if (err) {
+        callback(err, null)
+      } else {
+        callback(null, res)
+      }
+    });
 }

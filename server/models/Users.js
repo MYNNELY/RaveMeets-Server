@@ -6,16 +6,26 @@ module.exports = {
   loginModel: ({ username, password }, callback) => {
     Users.findOne({ username })
       .then((user) => {
-        if (bcrypt.compare(password, user.password)) {
-          jwt.sign({
-            id: user._id,
-            username: user.username
-          }, process.env.JWT_SECRET, (err, token) => {
-            callback(null, token)
-          });
-        } else {
-          callback(true, null)
-        }
+        bcrypt.compare(password, user.password)
+          .then((result) => {
+            if (result) {
+              jwt.sign({
+                id: user._id,
+                username: user.username
+              }, process.env.JWT_SECRET, (err, token) => {
+                if (err) {
+                  callback(err, null)
+                } else {
+                  callback(null, token)
+                }
+              });
+            } else {
+              callback(true, null)
+            }
+          })
+          .catch((err) => {
+            callback(err, null)
+          })
       })
       .catch((err) => {
         callback(err, null)
