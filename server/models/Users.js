@@ -68,7 +68,7 @@ module.exports = {
       artist_taste
     },
     callback) => {
-    Users.updateOne(
+    Users.findOneAndUpdate(
       {
         username
       },

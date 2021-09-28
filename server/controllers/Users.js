@@ -37,7 +37,7 @@ module.exports = {
       if (err) {
         response.status(500).send();
       } else {
-        response.status(201).send();
+        response.status(201).send(result);
       }
     });
   },
