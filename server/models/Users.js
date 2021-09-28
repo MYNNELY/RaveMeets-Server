@@ -115,7 +115,8 @@ module.exports = {
               $push: {
                 friends: {
                   friend_name: friendData.name,
-                  friend_username: friendData.username
+                  friend_username: friendData.username,
+                  friend_image_url: friendData.profile_pic_url
                 }
               }
             })
@@ -124,7 +125,8 @@ module.exports = {
                 $push: {
                   friends: {
                     friend_name: userData.name,
-                    friend_username: userData.username
+                    friend_username: userData.username,
+                    friend_image_url: userData.profile_pic_url
                   }
                 }
               })

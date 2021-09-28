@@ -9,7 +9,8 @@ mongoose.connect('mongodb://localhost:27017/ravemeets')
 
 const friendsSchema = new mongoose.Schema({
   friend_name: String,
-  friend_username: String
+  friend_username: String,
+  friend_image_url: String,
 });
 
 const musicSchema = new mongoose.Schema({
