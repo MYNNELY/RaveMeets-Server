@@ -35,7 +35,8 @@ module.exports = {
               members: [{
                 username: username,
                 name: usersResult.name,
-                role: 'admin'
+                role: 'admin',
+                profile_pic_url: usersResult.profile_pic_url,
               }]
             }, (err, groupsResult) => {
               if (err) {
@@ -125,7 +126,8 @@ module.exports = {
                 members: {
                   username: username,
                   name: userData.name,
-                  role: role
+                  role: role,
+                  profile_pic_url: userData.profile_pic_url,
                 }
               }
             })

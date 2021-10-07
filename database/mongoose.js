@@ -45,7 +45,8 @@ const venuesSchema = new mongoose.Schema({
 const groupMemberShema = new mongoose.Schema({
   username: String,
   name: String,
-  role: String
+  role: String,
+  profile_pic_url: String,
 })
 
 const eventsSchema = new mongoose.Schema({
